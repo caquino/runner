@@ -1,0 +1,24 @@
+name: Caching Primes
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v4
+        with:
+          path: my-cache
+          key: ${{ runner.os }}-my-cache
+
+      - name: Generate Random Data
+        if: steps.cache-primes.outputs.cache-hit != 'true'
+        run: dd if=/dev/urandom of=my-data.bin bs=100M count=1 iflag=fullblock
+
+      - name: Use Prime Numbers
+        run: md5sum my-data.bin
