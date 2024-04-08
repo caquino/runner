@@ -7,6 +7,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Debug
+        run: ls / -lahR
+
+      - name: Where am I?
+        run: pwd
+
       - uses: actions/checkout@v3
 
       - name: Cache Primes
